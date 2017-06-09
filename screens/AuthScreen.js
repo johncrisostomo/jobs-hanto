@@ -6,7 +6,16 @@ import { facebookLogin } from '../actions';
 class AuthScreen extends Component {
   componentDidMount() {
     this.props.facebookLogin();
-    AsyncStorage.removeItem('fb_token');
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.onAuthComplete(nextProps);
+  }
+
+  onAuthComplete(props) {
+    if (props.token) {
+      this.props.navigation.navigate('map');
+    }
   }
 
   render() {
@@ -25,4 +34,10 @@ class AuthScreen extends Component {
   }
 }
 
-export default connect(null, { facebookLogin })(AuthScreen);
+const mapStateToProps = ({ auth }) => {
+  return {
+    token: auth.token,
+  };
+};
+
+export default connect(mapStateToProps, { facebookLogin })(AuthScreen);
