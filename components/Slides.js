@@ -10,12 +10,13 @@ class Slides extends Component {
       return (
         <Button
           title="Onwards!"
-          raised
+          buttonStyle={styles.buttonStyle}
+          onPress={this.props.onComplete}
         />
       );
     }
   }
-  
+
   renderSlides() {
     return this.props.data.map((slide, index) => {
       return (
@@ -54,6 +55,10 @@ const styles = {
     fontSize: 30,
     color: 'white',
   },
+  buttonStyle: {
+    backgroundColor: '#0288D1',
+    marginTop: 15,
+  }
 };
 
 export default Slides;
