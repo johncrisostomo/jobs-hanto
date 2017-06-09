@@ -11,7 +11,9 @@ const SLIDE_DATA = [
 class WelcomeScreen extends Component {
   render() {
     return (
-      <Slides data={SLIDE_DATA} />
+      <Slides
+        data={SLIDE_DATA}
+      />
     );
   }
 }
