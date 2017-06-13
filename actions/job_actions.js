@@ -1,5 +1,5 @@
 import axios from 'axios';
-import reverseGeoCode from 'lantlng-to-zip';
+import reverseGeoCode from 'latlng-to-zip';
 import qs from 'qs';
 
 import { publisher } from '../indeedSettings.json';
@@ -28,6 +28,7 @@ export const fetchJobs = region => async dispatch => {
     let zip = await reverseGeoCode(region);
     const url = buildJobsUrl(zip);
     let { data } = await axios.get(url);
+    console.log(data);
     dispatch({ type: FETCH_JOBS, payload: data });
   } catch(e) {
     console.error(e);
