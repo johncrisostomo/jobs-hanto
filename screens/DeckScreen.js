@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
-import { View, Text, Platform } from 'react-native';
-import { Card, Button } from 'react-native-elements';
-import { MapView } from 'expo';
-import { connect } from 'react-redux';
-import Swipe from '../components/Swipe';
+import React, { Component } from "react";
+import { View, Text, Platform } from "react-native";
+import { Card, Button } from "react-native-elements";
+import { MapView } from "expo";
+import { connect } from "react-redux";
+import Swipe from "../components/Swipe";
+
+import { likeJob } from "../actions";
 
 class DeckScreen extends Component {
   renderCard(job) {
@@ -11,7 +13,7 @@ class DeckScreen extends Component {
       longitude: job.longitude,
       latitude: job.latitude,
       latitudeDelta: 0.045,
-      longitudeDelta: 0.02,
+      longitudeDelta: 0.02
     };
 
     return (
@@ -21,10 +23,9 @@ class DeckScreen extends Component {
           <MapView
             scrollEnabled={false}
             style={{ flex: 1 }}
-            cacheEnabled={Platform.OS === 'android' ? true : false}
+            cacheEnabled={Platform.OS === "android" ? true : false}
             initialRegion={initialRegion}
-          >
-          </MapView>
+          />
         </View>
 
         <View style={styles.detailWrapper}>
@@ -33,7 +34,7 @@ class DeckScreen extends Component {
         </View>
 
         <Text>
-          {job.snippet.replace(/<b>/g, '').replace(/<\/b>/g, '')}
+          {job.snippet.replace(/<b>/g, "").replace(/<\/b>/g, "")}
         </Text>
 
       </Card>
@@ -41,37 +42,36 @@ class DeckScreen extends Component {
   }
 
   renderNoMoreCards() {
-    return (
-      <Card title="No more jobs">
-      </Card>
-    );
+    return <Card title="No more jobs" />;
   }
 
   render() {
     return (
-      <View>
+      <View style={{ marginTop: 10 }}>
         <Swipe
           data={this.props.jobs}
+          keyProp="jobkey"
           renderCard={this.renderCard}
           renderNoMoreCards={this.renderNoMoreCards}
+          onSwipeRight={job => this.props.likeJob(job)}
         />
       </View>
-    )
+    );
   }
 }
 
 const styles = {
   detailWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginBottom: 10,
-  },
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginBottom: 10
+  }
 };
 
 const mapStateToProps = ({ jobs }) => {
   return {
-    jobs: jobs.results,
+    jobs: jobs.results
   };
 };
 
-export default connect(mapStateToProps)(DeckScreen);
+export default connect(mapStateToProps, { likeJob })(DeckScreen);
