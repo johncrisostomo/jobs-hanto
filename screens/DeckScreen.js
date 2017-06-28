@@ -18,25 +18,27 @@ class DeckScreen extends Component {
 
     return (
       <Card title={job.jobtitle}>
-
         <View style={{ height: 300 }}>
           <MapView
             scrollEnabled={false}
             style={{ flex: 1 }}
-            cacheEnabled={Platform.OS === "android" ? true : false}
+            cacheEnabled={Platform.OS === "android"}
             initialRegion={initialRegion}
           />
         </View>
 
         <View style={styles.detailWrapper}>
-          <Text>{job.company}</Text>
-          <Text>{job.formattedRelativeTime}</Text>
+          <Text>
+            {job.company}
+          </Text>
+          <Text>
+            {job.formattedRelativeTime}
+          </Text>
         </View>
 
         <Text>
           {job.snippet.replace(/<b>/g, "").replace(/<\/b>/g, "")}
         </Text>
-
       </Card>
     );
   }
